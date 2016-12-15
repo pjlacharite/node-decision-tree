@@ -1,0 +1,16 @@
+version: "2"
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - .:/code
+    container_name: mongodb
+  node-decision-tree:
+    image: pjlacharite/node-decision-tree
+    ports:
+      - "8080:8080"
+    container_name: decision-tree
+    depends_on:
+      - mongodb

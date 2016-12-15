@@ -1,0 +1,73 @@
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="decisionTree">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Node/Angular Todo App</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <!-- load bootstrap -->
+    <style>
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+
+        #todo-list {
+            margin-bottom: 30px;
+        }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <script src="/js/core.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="mainController">
+<div class="container">
+
+    <div class="jumbotron text-center">
+        <h1>Support</h1>
+    </div>
+
+
+
+    <div id="tree-list" class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <!-- LOOP OVER THE TODOS IN $scope.todos -->
+            <div class="checkbox" ng-repeat="question in questions">
+                <h2> {{ question.text }} </h2>
+                <div ng-repeat="answer in question.answers">
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="load(answer.questionId)">{{ answer.text }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ticket-form" class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form id="ticketForm" hidden>
+                <div class="form-group">
+
+                    <label>Email</label>
+                    <input type="email" class="form-control input-lg text-center" placeholder="john@doe.com" ng-model="formData.email">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="sendMail()">Submit Ticket</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
