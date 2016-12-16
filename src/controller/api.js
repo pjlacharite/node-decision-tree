@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 require("../model/question");
 const Question = mongoose.model("Question");
 const nodemailer = require('nodemailer');
-
+const sendmailTransport = require("nodemailer-sendmail-transport");
 
 /**
- * GET /
+ * GET /api
  * Api for the First load
  */
 exports.index = function (request, response) {
@@ -22,7 +22,7 @@ exports.index = function (request, response) {
 };
 
 /**
- * GET /
+ * GET /api/question/:name
  * Api for to find the next question.
  */
 exports.findQuestion = function (request, response) {
@@ -38,14 +38,34 @@ exports.findQuestion = function (request, response) {
     });
 };
 
-exports.submitTicket = function (request, response){
+/**
+ * POST /api/ticket
+ *
+ */
+exports.submitTicket = function (request, response) {
     console.log(request.body);
     //Send email to whoever.
-    response.sendStatus(200);
+    // setup e-mail data with unicode symbols
+    var options = {
+        from: '"Ticket Support" <foo@bar.com>', // sender address
+        to: 'pier-jean.lacharite@bellmedia.ca', // list of receivers
+        subject: 'Ticket Submission ✔', // Subject line
+        //text: request.body // html body
+    };
+    var transporter = nodemailer.createTransport(sendmailTransport(options));
+// send mail with defined transport object
+    transporter.sendMail(options, function (error, info) {
+        if (error) {
+            console.log(error);
+            response.sendStatus(500);
+        }
+        console.log('Message sent: ' + info.response);
+        response.sendStatus(200);
+    });
 }
 
 /**
- * GET /
+ * GET /api/demo
  * Api to populate demo content for dev purpose.
  */
 exports.populateDemoData = function (request, response) {

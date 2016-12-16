@@ -1,5 +1,8 @@
 FROM node:argon
 
+RUN apt-get update
+RUN apt-get install -y sendmail
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
